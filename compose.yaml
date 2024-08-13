@@ -1,0 +1,30 @@
+# Comments are provided throughout this file to help you get started.
+# If you need more help, visit the Docker compose reference guide at
+# https://docs.docker.com/compose/compose-file/
+
+
+services:
+  app:
+    container_name: verademo
+    build: 
+      context: ./
+    depends_on:
+      - model
+    environment:
+      NODE_ENV: development
+    ports:
+      - 8000:8000
+    develop:
+      watch:
+        - path: package.json
+          action: rebuild
+        - path: ./
+          target: /app
+          action: sync
+
+  model:
+    build:
+      context: ./textClassifier/
+    container_name: textClassifier
+    ports:
+      - 3306:3306

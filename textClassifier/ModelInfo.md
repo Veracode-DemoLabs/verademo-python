@@ -1,0 +1,2 @@
+## NBoW (Neural Bag-of-Words) Specifications
+This model was built according to the `Neural Bag of Words` tutorial mentioned [here](https://github.com/bentrevett/pytorch-sentiment-analysis/tree/main). The model was created in a Colab environment and is loaded using weights defined in the `nbow.pt` file.
