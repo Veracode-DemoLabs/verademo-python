@@ -2,9 +2,10 @@
 blabController interacts with blabs, and loads relevent pages such as 'Feed' and 'Blabbers'
 '''
 
+import json
 import logging
 import moment
-import sys
+import urllib
 
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
@@ -224,6 +225,26 @@ def blab(request):
 
                         comments.append(comment)
                     request.comments = comments
+
+                    # Check for Sentiment Response
+                    try:
+                        data = urllib.parse.urlencode({'Text':str(request.content)}).encode()
+                        host_ip = request.META['HTTP_HOST'].split(':')[0]
+                        url = 'http://'+host_ip + ':3306'
+                        req = urllib.request.Request(url, method='POST',headers={"Content-type":"application/json"},data=data)
+                        with urllib.request.urlopen(req) as res:
+                            body = json.loads(res.read().decode('utf-8'))
+                            print(body['Certainty'])
+                            # If Over 60% certainty found, include the result.
+                            if body['Certainty'] > 0.60:
+                                request.sentiment = body['Result']
+                            else:
+                                request.sentiment = None
+                    # END BAD CODE
+                    except Exception as e:
+                        logger.error(e)
+                        logger.error(f'Connection to {url} with data: {data} failed.')
+        
 
                     response = render(request, 'app/blab.html', {})
         except ConnectionError as ce:

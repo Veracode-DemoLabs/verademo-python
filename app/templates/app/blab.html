@@ -77,6 +77,16 @@
                                             value="{{ request.blabid }}">
                                     </form>
                                 </div>
+                                <p>Sentiment: {{request.sentiment}}</p>
+                                {% if request.sentiment %}
+                                <div style="margin-left:auto; margin-right:0">
+                                    <img src="{% static 'images/Smiley.png' %}" height="20" width="20">
+                                </div>
+                                {% else %}
+                                <div style="margin-left:auto; margin-right:0">
+                                    <img src="{% static 'images/Neutral.png' %}" height="20" width="20">
+                                </div>
+                                {% endif %}
                                 <ul class="commentList">
                                 {% for comment in request.comments %}
                                 <li>

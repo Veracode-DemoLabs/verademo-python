@@ -1,6 +1,7 @@
 import torch.nn as nn
 import torch
-import torchtext
+import torchtext.data
+import torchtext; torchtext.disable_torchtext_deprecation_warning()
 
 class NBoW(nn.Module):
     def __init__(self, vocab, embedding_dim, output_dim, pad_index):
@@ -37,4 +38,6 @@ def create_model():
     output_dim = 2
     pad_index = vocab["<pad>"]
     # Create Model instance
-    return NBoW(vocab, embedding_dim, output_dim, pad_index)
+    model = NBoW(vocab, embedding_dim, output_dim, pad_index)
+    model.load_state_dict(torch.load("nbow.pt"))
+    return model
