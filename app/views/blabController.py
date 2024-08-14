@@ -236,10 +236,8 @@ def blab(request):
                             body = json.loads(res.read().decode('utf-8'))
                             print(body['Certainty'])
                             # If Over 60% certainty found, include the result.
-                            if body['Certainty'] > 0.60:
-                                request.sentiment = body['Result']
-                            else:
-                                request.sentiment = None
+                            if body['Certainty'] > 0.95:
+                                request.sentiment = body['Result'] + 1
                     # END BAD CODE
                     except Exception as e:
                         logger.error(e)

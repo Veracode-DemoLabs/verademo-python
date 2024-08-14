@@ -58,7 +58,7 @@
             </blockquote>
         </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="detailBox">
                             <div class="titleBox">
                                 <label>Comments</label>
@@ -66,27 +66,34 @@
                             <div class="actionBox">
                                 <div class="blabber">
                                     <form class="form-inline" role="form" method="POST" action="blab">
-                                        <div class="form-group">
-                                            <input class="form-control" type="text"
+                                        <div class="form-group ">
+                                            <input id="commentHolder" class="form-control" type="text"
                                                 placeholder="Add a comment now..." name="comment" />
                                         </div>
+                                        <button class="btn btn-default">Add</button>
+                                        {% if request.sentiment %}
                                         <div class="form-group">
-                                            <button class="btn btn-default">Add</button>
+                                            <img id="generateSentiment" src="{% static 'images/sparkle.png' %}" height="50"
+                                             style="cursor:pointer" title="Click to generate a response!">
                                         </div>
+                                        {% endif %}
                                         <input type="hidden" name="blabid"
                                             value="{{ request.blabid }}">
+                                        
                                     </form>
                                 </div>
-                                <p>Sentiment: {{request.sentiment}}</p>
                                 {% if request.sentiment %}
-                                <div style="margin-left:auto; margin-right:0">
-                                    <img src="{% static 'images/Smiley.png' %}" height="20" width="20">
-                                </div>
-                                {% else %}
-                                <div style="margin-left:auto; margin-right:0">
-                                    <img src="{% static 'images/Neutral.png' %}" height="20" width="20">
-                                </div>
+                                    {% if request.sentiment == 1%}
+                                    <div style="margin-left:auto; margin-right:0">
+                                        <img src="{% static 'images/Frowny.png' %}" height="50" width="50">
+                                    </div>
+                                    {% else %}
+                                    <div style="margin-left:auto; margin-right:0">
+                                        <img src="{% static 'images/Smiley.png' %}" height="50" width="50">
+                                    </div>
+                                    {% endif %}
                                 {% endif %}
+
                                 <ul class="commentList">
                                 {% for comment in request.comments %}
                                 <li>
@@ -120,4 +127,36 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="{% static 'js/jquery-1.11.2.min.js' %}"></script>
 	<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+    <!-- Comment Generation -->
+	<script type="text/javascript">
+        const sentiment = {{request.sentiment}}
+        
+		$('#generateSentiment').addEventListener('click', function() {
+
+			$.ajax({
+				type: "get",
+				url: "http://localhost:3306",
+				data : {
+                    Sentiment: sentiment
+                },
+				processData : false,
+				contentType : false,
+				success : function(data) {
+					console.log("Generated Text Received");
+					if (data) {
+						if ('Text' in data) {
+                            $('#commentHolder').attr('value', data.Text);
+						}
+					}
+				},
+				error : function(err) {
+					console.log("Form submission error", err);
+					if (err.responseJSON && 'message' in err.responseJSON) {
+						$('body').append(err.responseJSON.message);
+					}
+				},
+			});
+		});
+	</script>
 </body>
