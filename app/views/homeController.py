@@ -11,14 +11,13 @@ def home(request):
         # START BAD CODE
         try:
             host_ip = request.META['HTTP_HOST'].split(':')[0]
+            print("da")
             redir = urllib.request.Request('http://' + host_ip + ':' + request.META['SERVER_PORT'] + '/feed')
-            urllib.request.urlopen(redir)
+            urllib.request.urlopen(redir, timeout=5)
         # END BAD CODE
         except: 
             # GOOD CODE:
+            print("redir")
             return redirect('feed')
-        
-       
     
     return login(request)
-
