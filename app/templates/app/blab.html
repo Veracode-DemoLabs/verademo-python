@@ -131,14 +131,14 @@
     <!-- Comment Generation -->
 	<script type="text/javascript">
         const sentiment = {{request.sentiment}}
-        
-		$('#generateSentiment').addEventListener('click', function() {
+		$('#generateSentiment').on('click', function() {
 
 			$.ajax({
 				type: "get",
 				url: "http://localhost:3306",
+                dataType: 'jsonp',
 				data : {
-                    Sentiment: sentiment
+                    "Sentiment": sentiment
                 },
 				processData : false,
 				contentType : false,

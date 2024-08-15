@@ -33,7 +33,7 @@ class NBoW(nn.Module):
 
 
 def create_model():
-    vocab = torch.load("vocab")
+    vocab = torch.load("vocab.txt")
     embedding_dim = 300
     output_dim = 2
     pad_index = vocab["<pad>"]
