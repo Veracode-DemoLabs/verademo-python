@@ -183,7 +183,7 @@ def blab(request):
         username = request.session.get('username')
         if not username:
             logger.info("User is not Logged In - redirecting...")
-            return redirect("login?target=feed")
+            return redirect("/login?target=feed")
         
         logger.info("User is Logged In - continuing... UA=" + request.headers["User-Agent"] + " U=" + username)
 
@@ -262,7 +262,7 @@ def blab(request):
         username = request.session.get('username')
         if not username:
             logger.info("User is not Logged In - redirecting...")
-            return redirect("login?target=feed")
+            return redirect("/login?target=feed")
         
         logger.info("User is Logged In - continuing... UA=" + request.headers["User-Agent"] + " U=" + username)
 
@@ -350,13 +350,13 @@ def blabbers(request):
         username = request.session.get('username')
         if not username:
             logger.info("User is not Logged In - redirecting...")
-            return redirect("login?target=blabbers")
+            return redirect("/login?target=blabbers")
         
         logger.info("User is Logged In - continuing... UA=" + request.headers["User-Agent"] + " U=" + username)
 
         if (command is None or not command):
             logger.info("Empty command provided...")
-            response = redirect('login?target=blabbers')
+            response = redirect('/login?target=blabbers')
         logger.info("blabberUsername = " + blabberUsername)
         logger.info("command = " + command)
 

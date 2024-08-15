@@ -36,25 +36,3 @@ SBOM generation for the Docker container is supported by the Container/CLI scann
 
 This application has flaws that can be fixed with [Veracode Fix](https://docs.veracode.com/r/veracode_fix).  For an example of one:
 
-### Build the app
-
-	cd app
-	mvn clean package
-
-### Run the Veracode Pipeline scanner
-
-	java -jar ${path-to-pipeline-scanner}/pipeline-scan.jar -f target/verademo.war -esd true 
-
-### Run Veracode Fix
-
-	veracode fix src/main/java/com/veracode/verademo/controller/UserController.java
-
-The first flaw is an SQL Injection around line 170 that can be Fixed.
-
-To verify the fix re-build the app and re-run the Pipeline scanner. 
-
-## Container scan
-
-From the root of the project run the Veracode container scanner:
-
-	veracode scan --type directory --source . --output container_results.json	
