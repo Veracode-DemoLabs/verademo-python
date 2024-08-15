@@ -15,7 +15,7 @@ class NeuralHTTP(BaseHTTPRequestHandler):
         try:
             url = urlparse(self.path)
             print(url)
-            body = parse_qs(url.query.decode('utf8'))
+            body = parse_qs(url.query)
             print(body)
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
@@ -46,8 +46,19 @@ class NeuralHTTP(BaseHTTPRequestHandler):
         except Exception as e:
             print(e)
             self.send_response(400)
-            
-        
+
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', '*')
+        self.send_header('Access-Control-Allow-Headers', '*')
+        self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
+        return super(NeuralHTTP, self).end_headers()
+         
+    def do_OPTIONS(self):
+        print("Options recognized")
+        self.send_response(200)
+        self.end_headers()
+
 
 if __name__ == "__main__":
     server = HTTPServer((HOST, PORT), NeuralHTTP)
