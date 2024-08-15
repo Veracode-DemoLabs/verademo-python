@@ -132,17 +132,21 @@
 	<script type="text/javascript">
         const sentiment = {{request.sentiment}}
 		$('#generateSentiment').on('click', function() {
-
+            console.log("pressed")
 			$.ajax({
 				type: "get",
 				url: "http://localhost:3306",
-                dataType: 'jsonp',
-				data : {
-                    "Sentiment": sentiment
+                dataType: 'json',
+				//data : {
+                //    "Sentiment": sentiment
+                //},
+                headers: {
+                    "Access-Control-Allow-Origin":"*"
                 },
-				processData : false,
-				contentType : false,
+				//processData : false,
+				contentType : "application/json",
 				success : function(data) {
+                    alert(data)
 					console.log("Generated Text Received");
 					if (data) {
 						if ('Text' in data) {
@@ -151,6 +155,7 @@
 					}
 				},
 				error : function(err) {
+                    alert(err)
 					console.log("Form submission error", err);
 					if (err.responseJSON && 'message' in err.responseJSON) {
 						$('body').append(err.responseJSON.message);
