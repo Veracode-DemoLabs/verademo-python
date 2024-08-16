@@ -1,0 +1,47 @@
+{
+    "positive": [
+      "Great job!",
+      "You’re amazing!",
+      "Love your enthusiasm!",
+      "Fantastic work!",
+      "Well done!",
+      "You’re a star!",
+      "Nice job!",
+      "Keep it up!",
+      "Impressive!",
+      "Excellent effort!",
+      "You rock!",
+      "Awesome work!",
+      "Good going!",
+      "Very impressive!",
+      "You’re the best!",
+      "You did great!",
+      "Way to go!",
+      "Superb job!",
+      "Well done, as always!",
+      "You nailed it!"
+    ],
+    "negative": [
+      "This needs improvement.",
+      "Not quite right.",
+      "Could use some work.",
+      "Needs more effort.",
+      "This isn’t quite what I expected.",
+      "It’s not up to standard.",
+      "There’s room for improvement.",
+      "This could be better.",
+      "Not your best work.",
+      "This didn’t meet expectations.",
+      "Needs more attention.",
+      "This isn’t quite right.",
+      "Not quite on target.",
+      "Could use a revision.",
+      "This fell short.",
+      "Needs adjustment.",
+      "This isn’t quite hitting the mark.",
+      "Requires further work.",
+      "This isn’t what we’re looking for.",
+      "This needs to be redone."
+    ]
+  }
+  

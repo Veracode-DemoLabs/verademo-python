@@ -1,5 +1,6 @@
 from http.server import HTTPServer, BaseHTTPRequestHandler
 import json
+import random
 import NBow
 from urllib.parse import parse_qs, urlparse
 
@@ -12,15 +13,25 @@ class NeuralHTTP(BaseHTTPRequestHandler):
 
     def do_GET(self):
         print("Get Recognized")
+        f = open('responses.json')
+        responses = json.load(f)
         try:
+            
             url = urlparse(self.path)
             print(url)
-            body = parse_qs(url.query)
+            body = parse_qs(url.query)['Sentiment']
+            if (body[0] == '1'):
+                text = random.choice(responses['negative'])
+            elif body[0] == '2':
+                text = random.choice(responses['positive'])
+            else:
+                text = "No sentiment found"
+
             print(body)
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.end_headers()
-            responseStr = json.dumps({'Text': "Populating comment"})
+            responseStr = json.dumps({'Text': text})
             self.wfile.write(bytes(responseStr,"utf-8"))
         except Exception as e:
             print(e)
