@@ -12,6 +12,7 @@ jobs:
           echo "Building Docker Container to Release the Application"
 
   scan-container:
+    needs: build-container
     runs-on: ubuntu-latest
     steps:
       - name: Submit Veracode Container Scan
@@ -23,6 +24,7 @@ jobs:
           ./veracode scan --source alpine:latest --type image	--format table
       
   release-container:
+    needs: scan-container
     runs-on: ubuntu-latest
     steps:
       - name: Build Docker Container
